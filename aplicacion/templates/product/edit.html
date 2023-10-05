@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block content%}
+<div class="my-5">
+  <div class="bg-dark w-max p-3" style="border-radius: 15px 15px 0 0;">
+    <h2 class="mb-0 text-white">Editar Producto</h2>
+  </div>
+  <form method="POST" action="{% url 'update' id=producto.id %}"
+    class="border px-5 py-4" style="border-radius: 0 0 15px 15px">
+    {% csrf_token %}
+
+    <div class="mb-3 w-100">
+      <label class="form-label" >Categoria</label>
+      <select name="id_categoria" class="form-select" >
+        {% for categoria in categorias%}
+          {% if categoria.id == producto.categoria.id%}
+            <option selected value="{{categoria.id}}">{{categoria.nombre}}</option>
+          {% else%}
+            <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Nombre</label>
+      <input class="form-control" name="nombre" 
+        type="text" value="{{producto.nombre}}"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Precio</label>
+      <input class="form-control" name="precio" 
+        type="number" step="any" min="0" value="{{producto.precio}}"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Stock</label>
+      <input class="form-control" name="stock" 
+        type="number" min="0" value="{{producto.stock}}"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">URL IMAGE</label>
+      <input class="form-control" name="upload" 
+        type="text" value="{{producto.upload}}"
+      >
+    </div>
+    <br>
+    <div class="row">
+      <button class="btn btn-secondary w-50" type="submit">Subir</button>
+      <a href="{% url 'index' %}" class="btn btn-light w-50" type="submit">Cancelar</a>
+    </div>
+</form>
+</div>
+{% endblock %}

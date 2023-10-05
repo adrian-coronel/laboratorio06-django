@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block content%}
+
+  <div class="row">
+    <!-- IMAGE -->
+    <div class="col-7">
+      <img class="w-100" src="{{producto.upload}}">  
+    </div>
+
+    <div class="col-5 py-3">
+      <h2 class="display-4">{{producto.nombre}}</h2>
+      <br>
+      <!-- BODY -->
+      <div>
+        <p class="fs-5 m-0">Stock: S/<u class="fs-4">{{producto.precio}}</u><p>
+        <p class="fs-5 m-0">Categoria: <span class="">{{producto.categoria.nombre}}</span><p>
+        <p class="fs-5 m-0">Stock: <span class="{{colorstock}}">{{producto.stock}}</span><p>
+      </div>
+      <div>
+        <button class="btn btn-success">Comprar</button>
+        <a href="{% url 'index' %}" class="btn btn-light">Cancelar</a>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

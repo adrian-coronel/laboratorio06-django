@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <div class="col-lg-3">
+    <h1 class="my-4">categorias</h1>
+    
+    <div class="list-group">
+      <form id="idForm" action="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        <a class="list-group-item" style="cursor: pointer;"
+            onclick="setCategoria('null');">
+          Todas
+        </a>
+        {% for categoria in categorias %}
+          <a class="list-group-item" style="cursor: pointer;"
+            onclick="setCategoria({{categoria.id}});">
+            {{categoria.nombre}}
+          </a>
+        {%endfor%}
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-9 my-4">
+    <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="carousel-item active">
+          <img class="d-block img-fluid w-100" src="https://img.freepik.com/premium-vector/new-laptop-sale-promotion-social-facebook-cover-banner_252779-424.jpg" alt="First slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block img-fluid w-100" src="https://i2.wp.com/todasgamers.com/wp-content/uploads/2018/10/banner.jpg?fit=1200%2C400" alt="Second slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block img-fluid w-100" src="https://static3.webx.pk/files/821/Images/banner-20104-030123021637.jpg" alt="Third slide">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <div class="my-4">
+      <a href="{% url 'create' %}" class="btn btn-success">Crear producto</a>
+    </div>
+    <div class="row">
+      {% for prod in product_list %}
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <a href="{% url 'show' id=prod.id %}">
+              <img class="card-img-top" src="{{prod.upload}}" alt="">
+            </a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="{% url 'show' id=prod.id %}">{{ prod.nombre }}</a>
+              </h4>
+              <h5>S/{{prod.precio}}</h5>
+              <p class="card-text">Categoria: {{prod.categoria.nombre}}</p>
+            </div>
+            <div class="card-footer">
+              <a href="{% url 'show' id=prod.id %}" class="btn btn-success">Ver</a>
+              <a href="{% url 'edit' id=prod.id %}" class="btn btn-dark">Editar</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+
+  <script>
+    function setCategoria(id) {
+      // Obtener el formulario por su ID
+      var formulario = document.getElementById('idForm');
+  
+      // Crear un elemento de entrada (input) oculto para almacenar el ID
+      var inputId = document.createElement('input');
+      inputId.type = 'hidden';  // Tipo de campo oculto
+      inputId.name = 'categoria_id';  // Nombre del campo que se enviará con el formulario
+      inputId.value = id;  // Valor del ID que se pasa como argumento
+  
+      // Agregar el campo oculto al formulario
+      formulario.appendChild(inputId);
+  
+      // Enviar el formulario
+      formulario.submit();
+    
+  }
+  </script>
+{% endblock %}
